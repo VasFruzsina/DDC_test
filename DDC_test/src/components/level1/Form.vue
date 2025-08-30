@@ -15,12 +15,12 @@ const budget = ref<number | null>(null);
   <form class="flex flex-col gap-4">
     <div>
       <label for="name" class="block text-sm font-medium">Projekt neve</label>
-      <AppInput id="name" v-model="name" type="text" />
+      <AppInput id="name" v-model="name" type="text" required/>
     </div>
 
     <div>
-      <label for="desc" class="block text-sm font-medium">Leírás</label>
-      <AppTextarea id="desc" v-model="description" />
+      <label for="desc" class="block text-sm font-medium" >Leírás</label>
+      <AppTextarea id="desc" v-model="description"/>
     </div>
 
     <div>
@@ -30,7 +30,8 @@ const budget = ref<number | null>(null);
 
     <div>
       <label for="budget" class="block text-sm font-medium">Költségvetés</label>
-      <AppInput id="budget" v-model.number="budget" type="number" />
+      <AppInput id="budget" v-model.number="budget" type="number" required min="1" step="any"/>
+      
     </div>
   </form>
 </template>
