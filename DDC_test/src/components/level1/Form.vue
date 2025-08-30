@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { ProjectForm } from "../../types/project";
 import { getItem, setItem } from "../composables/useProjectStorage";
 import AppButton from "../UI/AppButton.vue";
 import AppInput from "../UI/AppInput.vue";
@@ -11,35 +12,26 @@ const description = ref<string | undefined>(undefined);
 const startDate = ref<string | undefined>(undefined);
 const budget = ref<number | null>(null);
 
-interface ProjectForm {
-  id: number;
-  name: string;
-  description: string;
-  startDate: string;
-  budget: number | null;
-}
-
-function nextID(key = 'projectForm:lastId'): number {
-  const raw = localStorage.getItem(key)
-  const last = raw ? parseInt(raw, 10) : 0
-  const next = last + 1
-  localStorage.setItem(key, String(next))
-  return next
+function nextID(key = "projectForm:lastId"): number {
+  const raw = localStorage.getItem(key);
+  const last = raw ? parseInt(raw, 10) : 0;
+  const next = last + 1;
+  localStorage.setItem(key, String(next));
+  return next;
 }
 
 function onSubmit() {
-
   const data: ProjectForm = {
     id: nextID(),
-    name: name.value ?? '',
-    description: description.value ?? '',
-    startDate: startDate.value ?? '',
+    name: name.value ?? "",
+    description: description.value ?? "",
+    startDate: startDate.value ?? "",
     budget: budget.value ?? null,
-  }
+  };
 
-  const list = getItem<ProjectForm[]>('projectForms') ?? []
-  list.push(data)
-  setItem('projectForms', list)
+  const list = getItem<ProjectForm[]>("projectForms") ?? [];
+  list.push(data);
+  setItem("projectForms", list);
 }
 </script>
 

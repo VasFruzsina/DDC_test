@@ -1,9 +1,5 @@
 <script setup lang="ts">
-interface MenuItem {
-  name: string;
-  href: string;
-  currentItem?: boolean;
-}
+import type { MenuItem } from "../../types/project";
 
 const props = defineProps<{
   menuItems: MenuItem[];
@@ -14,12 +10,13 @@ const props = defineProps<{
   <nav
     class="flex w-full bg-purple-800 text-neutral-200 px-4 py-5 gap-5 items-center justify-center"
   >
-    <a 
-    v-for="item in menuItems" 
-    :key="item.name" 
-    :href="item.href"
-    :aria-current="item.currentItem ? 'page' : undefined"
-    class="hover:text-emerald-300"
-    >{{ item.name }}</a>
+    <a
+      v-for="item in menuItems"
+      :key="item.name"
+      :href="item.href"
+      :aria-current="item.currentItem ? 'page' : undefined"
+      class="hover:text-emerald-300"
+      >{{ item.name }}</a
+    >
   </nav>
 </template>
