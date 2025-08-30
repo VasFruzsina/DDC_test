@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import AppButton from "../UI/AppButton.vue";
 import AppInput from "../UI/AppInput.vue";
 import AppTextarea from "../UI/AppTextarea.vue";
+
 
 import { ref } from "vue";
 
@@ -32,5 +34,6 @@ const budget = ref<number | null>(null);
       <label for="budget" class="block text-sm font-medium">Költségvetés</label>
       <AppInput id="budget" v-model.number="budget" type="number" />
     </div>
+    <AppButton type="submit" subtitle="Submit"/>
   </form>
 </template>
