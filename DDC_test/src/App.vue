@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import AppNavbar from "./components/UI/AppNavbar.vue";
+import Form from "./components/level1/Form.vue"
+
 </script>
 
 <template>
@@ -9,7 +11,7 @@ import AppNavbar from "./components/UI/AppNavbar.vue";
       { name: 'Új Projekt Hozzáadása', href: '/projects' },
     ]"
   />
-
+  <Form/>
 </template>
 
 <style scoped>
