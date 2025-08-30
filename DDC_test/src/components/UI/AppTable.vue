@@ -2,11 +2,12 @@
 import type { ProjectForm } from "../../types/project";
 import { getItem } from "../composables/useProjectStorage";
 import AppButton from "./AppButton.vue";
+import { removeProject } from "../composables/useProjectStorage";
 
 const one = getItem<ProjectForm>("projectForm");
 const many = getItem<ProjectForm[]>("projectForms");
-
 const rows: ProjectForm[] = many ?? (one ? [one] : []);
+
 </script>
 
 <template>
@@ -31,7 +32,7 @@ const rows: ProjectForm[] = many ?? (one ? [one] : []);
           <AppButton subtitle="Szerkesztés" type="button" />
         </td>
         <td class="border text-center">
-          <AppButton subtitle="Törlés" type="button" />
+          <AppButton subtitle="Törlés" type="button" @click="removeProject(item.id)" />
         </td>
       </tr>
     </tbody>
