@@ -2,7 +2,6 @@
 const model = defineModel<string | number | null | undefined>()
 
 const props = defineProps<{
-  id?: string
   type?: 'text' | 'date' | 'number'
   placeholder?: string
 }>()
@@ -10,7 +9,6 @@ const props = defineProps<{
 
 <template>
   <input
-    :id="id"
     :type="type"
     v-model="model"
     :placeholder="placeholder"
