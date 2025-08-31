@@ -5,11 +5,10 @@ import ProjectForm from "../components/layouts/ProjectForm.vue"
 import App from '../App.vue'
 
 const routes = [
-  { path: '/', component: App},
-  { path: '/project-list', component: ProjectList},
-  { path: '/project-form', component: ProjectForm },
-
-]
+  { path: "/", component: App },
+  { path: "/projects", component: ProjectList },
+  { path: "/projects/new", component: ProjectForm },
+];
 
 const router = createRouter({
   history: createWebHistory(),
