@@ -4,6 +4,7 @@ import { getItem, removeProject } from "../composables/useProjectStorage";
 import AppTable from "../UI/AppTable.vue";
 import { useRouter } from "vue-router";
 import { computed, ref } from "vue";
+import { CurrencyFormat, DateTimeFormat } from "../../utils/formatters";
 
 const one = getItem<ProjectForm>("projectForm");
 const many = getItem<ProjectForm[]>("projectForms");
@@ -31,10 +32,10 @@ const filteredRows = computed(() => {
 });
 
 const columns = [
-  { key: "name", label: "Projekt neve" },
-  { key: "description", label: "Leírás" },
-  { key: "startDate", label: "Kezdési dátum" },
-  { key: "budget", label: "Költségvetés" },
+  { key: 'name', label: 'Projekt neve' },
+  { key: 'description', label: 'Leírás' },
+  { key: 'startDate', label: 'Kezdési dátum', formatter: (v: any) => DateTimeFormat(v) },
+  { key: 'budget', label: 'Költségvetés', formatter: (v: any) => CurrencyFormat(Number(v)) },
 ];
 
 const router = useRouter();
