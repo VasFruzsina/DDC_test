@@ -8,6 +8,7 @@ const routes = [
   { path: "/", component: Home },
   { path: "/projects", component: ProjectList },
   { path: "/projects/new", component: ProjectForm },
+  { path: "/projects/edit/:id", component: ProjectForm },
 ];
 
 const router = createRouter({

@@ -2,6 +2,7 @@
 import type { ProjectForm } from "../../types/project";
 import { getItem, removeProject } from "../composables/useProjectStorage";
 import AppTable from "../UI/AppTable.vue";
+import { useRouter } from "vue-router";
 
 const one = getItem<ProjectForm>("projectForm");
 const many = getItem<ProjectForm[]>("projectForms");
@@ -14,10 +15,12 @@ const columns = [
   { key: "budget", label: "Költségvetés" },
 ];
 
+const router = useRouter();
+
 const actions = [
   {
     label: "Szerkesztés",
-    onClick: (row: ProjectForm) => console.log("Edit", row),
+    onClick: (row: ProjectForm) => router.push(`/projects/edit/${row.id}`),
   },
   { label: "Törlés", onClick: (row: ProjectForm) => removeProject(row.id) },
 ];
