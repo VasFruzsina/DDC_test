@@ -39,12 +39,12 @@ function onSubmit() {
   <form class="flex flex-col gap-4" @submit="onSubmit">
     <div>
       <label for="name" class="block text-sm font-medium">Projekt neve</label>
-      <AppInput id="name" v-model="name" type="text" />
+      <AppInput id="name" v-model="name" type="text" required/>
     </div>
 
     <div>
-      <label for="desc" class="block text-sm font-medium">Leírás</label>
-      <AppTextarea id="desc" v-model="description" />
+      <label for="desc" class="block text-sm font-medium" >Leírás</label>
+      <AppTextarea id="desc" v-model="description"/>
     </div>
 
     <div>
@@ -54,7 +54,8 @@ function onSubmit() {
 
     <div>
       <label for="budget" class="block text-sm font-medium">Költségvetés</label>
-      <AppInput id="budget" v-model.number="budget" type="number" />
+      <AppInput id="budget" v-model.number="budget" type="number" required min="1" step="any"/>
+      
     </div>
     <AppButton type="submit" subtitle="Mentés" />
   </form>
