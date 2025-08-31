@@ -1,17 +1,16 @@
 <script setup lang="ts">
-import AppNavbar from "./components/UI/AppNavbar.vue";
-import Form from "./components/level1/Form.vue"
+import AppNavbar, { type MenuItem } from "./components/UI/AppNavbar.vue";
 
+const mainMenu: MenuItem[] = [
+  { name: "Kezdőlap", href: "/" },
+  { name: "Projekt Lista", href: "/projects" },
+  { name: "Új Projekt", href: "/projects/new" },
+];
 </script>
 
 <template>
-  <AppNavbar
-    :menuItems="[
-      { name: 'Projektek Listája', href: '/project-list' },
-      { name: 'Új Projekt Hozzáadása', href: '/projects' },
-    ]"
-  />
-  <Form/>
+  <AppNavbar :menu-items="mainMenu" />
+  <RouterView />
 </template>
 
 <style scoped>

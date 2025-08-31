@@ -2,12 +2,13 @@ import { createWebHistory, createRouter } from 'vue-router'
 
 import ProjectList from "../components/layouts/ProjectList.vue"
 import ProjectForm from "../components/layouts/ProjectForm.vue"
-import App from '../App.vue'
+import Home from "../components/layouts/Home.vue";
 
 const routes = [
-  { path: "/", component: App },
+  { path: "/", component: Home },
   { path: "/projects", component: ProjectList },
   { path: "/projects/new", component: ProjectForm },
+  { path: "/projects/edit/:id", component: ProjectForm },
 ];
 
 const router = createRouter({

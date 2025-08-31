@@ -1,11 +1,11 @@
 <script setup lang="ts">
-interface MenuItem {
+export interface MenuItem {
   name: string;
   href: string;
-  currentItem?: boolean;
+  current?: boolean;
 }
 
-const props = defineProps<{
+defineProps<{
   menuItems: MenuItem[];
 }>();
 </script>
@@ -18,9 +18,10 @@ const props = defineProps<{
       v-for="item in menuItems"
       :key="item.name"
       :to="item.href"
-      :aria-current="item.currentItem ? 'page' : undefined"
+      :aria-current="item.current ? 'page' : undefined"
       class="hover:text-emerald-300"
-      >{{ item.name }}</RouterLink
     >
+      {{ item.name }}
+    </RouterLink>
   </nav>
 </template>
