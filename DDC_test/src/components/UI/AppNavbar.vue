@@ -1,7 +1,11 @@
 <script setup lang="ts">
-import type { MenuItem } from "../../types/project";
+export interface MenuItem {
+  name: string;
+  href: string;
+  current?: boolean;
+}
 
-const props = defineProps<{
+defineProps<{
   menuItems: MenuItem[];
 }>();
 </script>
@@ -14,9 +18,10 @@ const props = defineProps<{
       v-for="item in menuItems"
       :key="item.name"
       :to="item.href"
-      :aria-current="item.currentItem ? 'page' : undefined"
+      :aria-current="item.current ? 'page' : undefined"
       class="hover:text-emerald-300"
-      >{{ item.name }}</RouterLink
     >
+      {{ item.name }}
+    </RouterLink>
   </nav>
 </template>

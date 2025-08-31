@@ -1,46 +1,68 @@
 <script setup lang="ts">
-import type { ProjectForm } from "../../types/project";
-import { getItem } from "../composables/useProjectStorage";
-import AppButton from "./AppButton.vue";
-import { removeProject } from "../composables/useProjectStorage";
+export interface TableColumn<T = any> {
+  key: keyof T | string;
+  label: string;
+  formatter?: (value: any, row: T) => string;
+}
 
-const one = getItem<ProjectForm>("projectForm");
-const many = getItem<ProjectForm[]>("projectForms");
-const rows: ProjectForm[] = many ?? (one ? [one] : []);
-
+const props = defineProps<{
+  rows: any[];
+  columns: TableColumn[];
+  actions?: {
+    label: string;
+    onClick: (row: any) => void;
+  }[];
+}>();
 </script>
 
 <template>
   <table class="w-full border-collapse rounded">
     <thead>
       <tr class="bg-white/5">
-        <th class="border px-3 py-2 text-center">Projekt neve</th>
-        <th class="border px-3 py-2 text-center">Leírás</th>
-        <th class="border px-3 py-2 text-center">Kezdési dátum</th>
-        <th class="border px-3 py-2 text-center">Költségvetés</th>
-        <th class="border px-3 py-2 text-center" colspan="2">Műveletek</th>
+        <th
+          v-for="col in columns"
+          :key="col.key"
+          class="border px-3 py-2 text-center"
+        >
+          {{ col.label }}
+        </th>
+        <th
+          v-if="actions && actions.length"
+          :colspan="actions.length"
+          class="border px-3 py-2 text-center"
+        >
+          Műveletek
+        </th>
       </tr>
     </thead>
 
     <tbody v-if="rows.length">
-      <tr v-for="item in rows" :key="item.id ?? item.name + item.startDate">
-        <td class="border text-center">{{ item.name }}</td>
-        <td class="border text-center">{{ item.description }}</td>
-        <td class="border text-center">{{ item.startDate }}</td>
-        <td class="border text-center">{{ item.budget }}</td>
-        <td class="border text-center">
-          <AppButton subtitle="Szerkesztés" type="button" />
+      <tr v-for="(row, i) in rows" :key="row.id ?? i">
+        <td v-for="col in columns" :key="col.key" class="border text-center">
+          {{ col.formatter ? col.formatter(row[col.key], row) : row[col.key] }}
         </td>
-        <td class="border text-center">
-          <AppButton subtitle="Törlés" type="button" @click="removeProject(item.id)" />
+        <td
+          v-for="action in actions"
+          :key="action.label"
+          class="border text-center"
+        >
+          <button
+            class="px-3 py-1 bg-emerald-500 text-white rounded hover:bg-emerald-600"
+            @click="action.onClick(row)"
+          >
+            {{ action.label }}
+          </button>
         </td>
       </tr>
     </tbody>
 
     <tbody v-else>
       <tr>
-        <td class="border px-3 py-4 text-center" colspan="6">
-          Nincs mentett projekt.
+        <td
+          class="border px-3 py-4 text-center"
+          :colspan="columns.length + (actions?.length || 0)"
+        >
+          Nincs adat.
         </td>
       </tr>
     </tbody>
