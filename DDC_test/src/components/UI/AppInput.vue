@@ -1,19 +1,29 @@
 <script setup lang="ts">
+import { parsePositiveNumber } from "../../utils/validators";
 
-const model = defineModel<number | null | string | undefined>()
+const model = defineModel<number | string | null | undefined>({ default: "" });
 
-const props = defineProps<{
-  type?: 'text' | 'date' | 'number'
-}>()
+const props = withDefaults(
+  defineProps<{
+    type?: "text" | "date" | "number";
+  }>(),
+  {
+    type: "text",
+  }
+);
 
 function onInput(e: Event) {
-  if (props.type === 'number') {
-    const target = e.target as HTMLInputElement;
-    const value = Number(target.value);
-    if (target.value !== '' && (isNaN(value) || value <= 0)) {
-      target.value = '';
-      model.value = '';
+  const el = e.target as HTMLInputElement;
+
+  if (props.type === "number") {
+    const parsed = parsePositiveNumber(el.value);
+    if (parsed === null) {
+      model.value = null;
+    } else {
+      model.value = parsed;
     }
+  } else {
+    model.value = el.value;
   }
 }
 </script>
@@ -23,6 +33,6 @@ function onInput(e: Event) {
     :type="type"
     v-model="model"
     @input="onInput"
-    class="w-full rounded-md border"
+    class="w-full rounded-md border px-3 py-2"
   />
 </template>
