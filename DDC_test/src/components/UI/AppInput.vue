@@ -33,6 +33,6 @@ function onInput(e: Event) {
     :type="type"
     v-model="model"
     @input="onInput"
-    class="w-full rounded-md border px-3 py-2"
+    class="pl-9 w-full rounded-xl border border-slate-200 bg-white py-2.5 text-slate-800 placeholder:text-slate-400 shadow-sm focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400"
   />
 </template>
