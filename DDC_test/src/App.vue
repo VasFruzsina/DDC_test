@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import AppNavbar, { type MenuItem } from "./components/UI/AppNavbar.vue";
+import AppToast from "./components/UI/AppToast.vue";
 import logo from "./assets/logo.svg";
 
 const mainMenu: MenuItem[] = [
@@ -11,6 +12,7 @@ const mainMenu: MenuItem[] = [
 
 <template>
   <AppNavbar :menu-items="mainMenu" :img-src="logo"/>
+  <AppToast />
   <RouterView />
 </template>
 
