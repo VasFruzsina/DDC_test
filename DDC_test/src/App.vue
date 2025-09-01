@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import AppNavbar, { type MenuItem } from "./components/UI/AppNavbar.vue";
+import logo from "./assets/logo.svg";
 
 const mainMenu: MenuItem[] = [
   { name: "Kezdőlap", href: "/" },
@@ -9,7 +10,7 @@ const mainMenu: MenuItem[] = [
 </script>
 
 <template>
-  <AppNavbar :menu-items="mainMenu" />
+  <AppNavbar :menu-items="mainMenu" :img-src="logo"/>
   <RouterView />
 </template>
 

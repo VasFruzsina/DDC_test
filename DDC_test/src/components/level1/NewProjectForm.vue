@@ -5,17 +5,18 @@ import { getItem, setItem } from "../composables/useProjectStorage";
 import AppButton from "../UI/AppButton.vue";
 import AppInput from "../UI/AppInput.vue";
 import AppTextarea from "../UI/AppTextarea.vue";
-
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
 
 const name = ref<string | undefined>(undefined);
 const description = ref<string | undefined>(undefined);
 const startDate = ref<string | undefined>(undefined);
 const budget = ref<number | null>(null);
+
 const route = useRoute();
 const id = Number(route.params.id);
 const all = getItem<ProjectForm[]>("projectForms") ?? [];
 const project = all.find((p) => p.id === id);
+const isEditing = computed(() => Number.isFinite(id) && !!project);
 
 function nextID(key = "projectForm:lastId"): number {
   const raw = localStorage.getItem(key);
@@ -27,7 +28,7 @@ function nextID(key = "projectForm:lastId"): number {
 
 function onSubmit() {
   const list = getItem<ProjectForm[]>("projectForms") ?? [];
-  if (id) {
+  if (isEditing.value) {
     const idx = list.findIndex((p) => p.id === id);
     if (idx !== -1) {
       list[idx] = {
@@ -53,47 +54,121 @@ function onSubmit() {
 }
 
 onMounted(() => {
-  if (id !== null) {
-    const all = getItem<ProjectForm[]>("projectForms") ?? [];
-    const project = all.find((p) => p.id === id);
-    if (project) {
-      name.value = project.name;
-      description.value = project.description;
-      startDate.value = project.startDate;
-      budget.value = project.budget;
-    }
+  if (project) {
+    name.value = project.name;
+    description.value = project.description;
+    startDate.value = project.startDate;
+    budget.value = project.budget;
   }
 });
 </script>
 
 <template>
-  <form class="flex flex-col gap-4" @submit="onSubmit">
-    <div>
-      <label for="name" class="block text-sm font-medium">Projekt neve</label>
-      <AppInput id="name" v-model="name" type="text" required />
+  <div class="relative min-h-[70vh] p-10">
+    <div class="pointer-events-none absolute inset-0 -z-10">
+      <div
+        class="absolute -top-20 -left-20 h-72 w-72 rounded-full bg-indigo-500/20 blur-3xl"
+      ></div>
+      <div
+        class="absolute bottom-0 right-0 h-72 w-72 rounded-full bg-cyan-400/20 blur-3xl"
+      ></div>
     </div>
 
-    <div>
-      <label for="desc" class="block text-sm font-medium">Leírás</label>
-      <AppTextarea id="desc" v-model="description" />
-    </div>
+    <div
+      class="mx-auto max-w-3xl overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 shadow-xl backdrop-blur-md"
+    >
+      <header class="mb-6 flex items-center justify-between gap-4">
+        <div>
+          <h1
+            class="text-xl font-semibold text-indigo-600 dark:text-slate-100 mb-2"
+          >
+            {{ isEditing ? "Projekt szerkesztése" : "Új projekt" }}
+          </h1>
+          <p class="text-sm text-slate-500">
+            Töltsd ki az alábbi mezőket, majd mentsd el.
+          </p>
+        </div>
+        <span
+          class="rounded-full bg-indigo-500/10 px-3 py-1 text-xs font-medium text-indigo-600"
+        >
+          {{ isEditing ? "Szerkesztés" : "Létrehozás" }}
+        </span>
+      </header>
 
-    <div>
-      <label for="start" class="block text-sm font-medium">Kezdési dátum</label>
-      <AppInput id="start" v-model="startDate" type="date" />
-    </div>
+      <form class="grid gap-5" @submit.prevent="onSubmit">
+        <div class="relative">
+          <label
+          for="name"
+          class="mb-2 block text-sm font-medium text-slate-600"
+          >Projekt neve</label
+          >
+          
+          <AppInput
+            id="name"
+            v-model="name"
+            type="text"
+            required
+          />
+        </div>
 
-    <div>
-      <label for="budget" class="block text-sm font-medium">Költségvetés</label>
-      <AppInput
-        id="budget"
-        v-model.number="budget"
-        type="number"
-        required
-        min="1"
-        step="any"
-      />
+        <div>
+          <label
+            for="desc"
+            class="mb-2 block text-sm font-medium text-slate-600"
+            >Leírás</label
+          >
+          <div class="relative">
+            <AppTextarea
+              id="desc"
+              v-model="description"
+              placeholder="Röviden a projektről…"
+            />
+            <span
+              class="pointer-events-none absolute bottom-2 right-3 text-xs text-slate-400"
+            >
+              {{ description?.length ?? 0 }}/500
+            </span>
+          </div>
+        </div>
+        <div class="grid gap-5 md:grid-cols-2">
+          <div class="relative">
+            <label
+              for="start"
+              class="mb-2 block text-sm font-medium text-slate-600"
+              >Kezdési dátum</label
+            >
+            <AppInput
+              id="start"
+              v-model="startDate"
+              type="date"></AppInput>
+          </div>
+          <div class="relative">
+            <label
+              for="budget"
+              class="mb-2 block text-sm font-medium text-slate-600"
+              >Költségvetés</label
+            >
+            <AppInput
+              id="budget"
+              v-model.number="budget"
+              type="number"
+              min="1"
+              step="any"
+            />
+            <span
+              class="pointer-events-none absolute right-3 top-[38px] rounded-full bg-slate-800 px-2 py-0.5 text-xs font-medium text-white/90"
+            >
+              HUF
+            </span>
+          </div>
+        </div>
+        <div class="mt-2 flex items-center justify-center gap-3">
+          <AppButton
+            type="submit"
+            subtitle="Mentés"
+          />
+        </div>
+      </form>
     </div>
-    <AppButton type="submit" subtitle="Mentés" />
-  </form>
+  </div>
 </template>
