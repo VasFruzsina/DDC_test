@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 64 64" role="img" aria-labelledby="ptTitle ptDesc">
+  <title id="ptTitle">Project Tracker – logo icon</title>
+  <desc id="ptDesc">Rounded gradient square with a timeline and a checkmark.</desc>
+  <defs>
+    <linearGradient id="pt-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="var(--pt-start, #6366f1)"></stop>
+      <stop offset="100%" stop-color="var(--pt-end, #06b6d4)"></stop>
+    </linearGradient>
+  </defs>
+
+  <!-- háttér -->
+  <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#pt-grad)"></rect>
+  <!-- finom belső keret -->
+  <rect x="4.5" y="4.5" width="55" height="55" rx="13.5" fill="none" stroke="rgba(255,255,255,.35)"></rect>
+
+  <!-- checkmark (haladás készre) -->
+  <path d="M22 26l7 7L44 18" fill="none" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity=".95"></path>
+
+  <!-- idővonal / milestone-ok -->
+  <path d="M16 38h32" stroke="rgba(255,255,255,.9)" stroke-width="3" stroke-linecap="round"></path>
+  <circle cx="16" cy="38" r="3" fill="white" opacity=".95"></circle>
+  <circle cx="32" cy="38" r="3" fill="white" opacity=".95"></circle>
+  <circle cx="48" cy="38" r="3" fill="white" opacity=".95"></circle>
+</svg>
