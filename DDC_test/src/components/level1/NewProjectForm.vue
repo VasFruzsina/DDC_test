@@ -6,6 +6,8 @@ import AppButton from "../UI/AppButton.vue";
 import AppInput from "../UI/AppInput.vue";
 import AppTextarea from "../UI/AppTextarea.vue";
 import { onMounted, ref, computed } from "vue";
+import { useToast } from "../composables/useToast";
+const { showToast } = useToast();
 
 const name = ref<string | undefined>(undefined);
 const description = ref<string | undefined>(undefined);
@@ -39,6 +41,7 @@ function onSubmit() {
         budget: budget.value ?? null,
       };
       setItem("projectForms", list);
+      showToast("Projekt sikeresen módosítva!", "info");
     }
   } else {
     const data: ProjectForm = {
@@ -50,6 +53,7 @@ function onSubmit() {
     };
     list.push(data);
     setItem("projectForms", list);
+    showToast("Új projekt sikeresen létrehozva!", "success");
   }
 }
 
@@ -156,7 +160,7 @@ onMounted(() => {
               step="any"
             />
             <span
-              class="pointer-events-none absolute right-3 top-[38px] rounded-full bg-slate-800 px-2 py-0.5 text-xs font-medium text-white/90"
+              class="pointer-events-none absolute right-3 top-[42px] rounded-full bg-slate-800 px-2 py-0.5 text-xs font-medium text-white/90"
             >
               HUF
             </span>
