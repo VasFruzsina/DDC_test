@@ -1,72 +1,3 @@
-<script setup lang="ts">
-import { useRoute } from "vue-router";
-import type { ProjectForm } from "../../types/project";
-import { getItem, setItem } from "../composables/useProjectStorage";
-import AppButton from "../UI/AppButton.vue";
-import AppInput from "../UI/AppInput.vue";
-import AppTextarea from "../UI/AppTextarea.vue";
-import { onMounted, ref, computed } from "vue";
-import { useToast } from "../composables/useToast";
-const { showToast } = useToast();
-
-const name = ref<string | undefined>(undefined);
-const description = ref<string | undefined>(undefined);
-const startDate = ref<string | undefined>(undefined);
-const budget = ref<number | null>(null);
-
-const route = useRoute();
-const id = Number(route.params.id);
-const all = getItem<ProjectForm[]>("projectForms") ?? [];
-const project = all.find((p) => p.id === id);
-const isEditing = computed(() => Number.isFinite(id) && !!project);
-
-function nextID(key = "projectForm:lastId"): number {
-  const raw = localStorage.getItem(key);
-  const last = raw ? parseInt(raw, 10) : 0;
-  const next = last + 1;
-  localStorage.setItem(key, String(next));
-  return next;
-}
-
-function onSubmit() {
-  const list = getItem<ProjectForm[]>("projectForms") ?? [];
-  if (isEditing.value) {
-    const idx = list.findIndex((p) => p.id === id);
-    if (idx !== -1) {
-      list[idx] = {
-        id,
-        name: name.value ?? "",
-        description: description.value ?? "",
-        startDate: startDate.value ?? "",
-        budget: budget.value ?? null,
-      };
-      setItem("projectForms", list);
-      showToast("Projekt sikeresen módosítva!", "info");
-    }
-  } else {
-    const data: ProjectForm = {
-      id: nextID(),
-      name: name.value ?? "",
-      description: description.value ?? "",
-      startDate: startDate.value ?? "",
-      budget: budget.value ?? null,
-    };
-    list.push(data);
-    setItem("projectForms", list);
-    showToast("Új projekt sikeresen létrehozva!", "success");
-  }
-}
-
-onMounted(() => {
-  if (project) {
-    name.value = project.name;
-    description.value = project.description;
-    startDate.value = project.startDate;
-    budget.value = project.budget;
-  }
-});
-</script>
-
 <template>
   <div class="relative min-h-[70vh] p-10">
     <div class="pointer-events-none absolute inset-0 -z-10">
@@ -176,3 +107,72 @@ onMounted(() => {
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { useRoute } from "vue-router";
+import type { ProjectForm } from "../../types/project";
+import { getItem, setItem } from "../composables/useProjectStorage";
+import AppButton from "../UI/AppButton.vue";
+import AppInput from "../UI/AppInput.vue";
+import AppTextarea from "../UI/AppTextarea.vue";
+import { onMounted, ref, computed } from "vue";
+import { useToast } from "../composables/useToast";
+const { showToast } = useToast();
+
+const name = ref<string | undefined>(undefined);
+const description = ref<string | undefined>(undefined);
+const startDate = ref<string | undefined>(undefined);
+const budget = ref<number | null>(null);
+
+const route = useRoute();
+const id = Number(route.params.id);
+const all = getItem<ProjectForm[]>("projectForms") ?? [];
+const project = all.find((p) => p.id === id);
+const isEditing = computed(() => Number.isFinite(id) && !!project);
+
+function nextID(key = "projectForm:lastId"): number {
+  const raw = localStorage.getItem(key);
+  const last = raw ? parseInt(raw, 10) : 0;
+  const next = last + 1;
+  localStorage.setItem(key, String(next));
+  return next;
+}
+
+function onSubmit() {
+  const list = getItem<ProjectForm[]>("projectForms") ?? [];
+  if (isEditing.value) {
+    const idx = list.findIndex((p) => p.id === id);
+    if (idx !== -1) {
+      list[idx] = {
+        id,
+        name: name.value ?? "",
+        description: description.value ?? "",
+        startDate: startDate.value ?? "",
+        budget: budget.value ?? null,
+      };
+      setItem("projectForms", list);
+      showToast("Projekt sikeresen módosítva!", "info");
+    }
+  } else {
+    const data: ProjectForm = {
+      id: nextID(),
+      name: name.value ?? "",
+      description: description.value ?? "",
+      startDate: startDate.value ?? "",
+      budget: budget.value ?? null,
+    };
+    list.push(data);
+    setItem("projectForms", list);
+    showToast("Új projekt sikeresen létrehozva!", "success");
+  }
+}
+
+onMounted(() => {
+  if (project) {
+    name.value = project.name;
+    description.value = project.description;
+    startDate.value = project.startDate;
+    budget.value = project.budget;
+  }
+});
+</script>

@@ -1,21 +1,3 @@
-<script setup lang="ts">
-const techStack = [
-  'Angular, React, Vue.js',
-  'Bootstrap, Tailwind, UnoCSS',
-  'Docker',
-  'Firebase',
-  'Figma',
-  'Golang',
-  'HTML, CSS, SCSS',
-  'JavaScript, TypeScript',
-  'Jira, Trello, Confluence',
-  'Twig',
-  'PHP',
-  'Photoshop, Illustrator, InDesign',
-  'PostgreSQL, MySQL, NoSQL',
-];
-</script>
-
 <template>
   <section class="relative min-h-[70vh] p-10">  
     <div class="pointer-events-none absolute inset-0 -z-10">
@@ -76,3 +58,21 @@ const techStack = [
     </div>
   </section>
 </template>
+
+<script setup lang="ts">
+const techStack = [
+  'Angular, React, Vue.js',
+  'Bootstrap, Tailwind, UnoCSS',
+  'Docker',
+  'Firebase',
+  'Figma',
+  'Golang',
+  'HTML, CSS, SCSS',
+  'JavaScript, TypeScript',
+  'Jira, Trello, Confluence',
+  'Twig',
+  'PHP',
+  'Photoshop, Illustrator, InDesign',
+  'PostgreSQL, MySQL, NoSQL',
+];
+</script>

@@ -1,20 +1,3 @@
-<script setup lang="ts">
-export interface TableColumn<T = any> {
-  key: keyof T | string;
-  label: string;
-  formatter?: (value: any, row: T) => string;
-}
-
-defineProps<{
-  rows: any[];
-  columns: TableColumn[];
-  actions?: {
-    label: string;
-    onClick: (row: any) => void;
-  }[];
-}>();
-</script>
-
 <template>
   <div class="relative">
     <div
@@ -22,7 +5,7 @@ defineProps<{
     ></div>
 
     <div
-      class="overflow-x-auto rounded-2xl  bg-white/80 dark:bg-slate-900/40 backdrop-blur shadow-lg"
+      class="overflow-x-auto rounded-2xl bg-white/80 dark:bg-slate-900/40 backdrop-blur shadow-lg"
     >
       <table class="min-w-full border-separate border-spacing-0">
         <thead class="sticky top-0 z-10">
@@ -40,7 +23,9 @@ defineProps<{
               class="px-3 py-2 text-xs font-semibold uppercase tracking-wide text-slate-600 bg-white/30 dark:bg-slate-900/40 backdrop-blur border-b border-white/20 text-center"
               scope="col"
             >
-              <div class="flex justify-center items-center gap-1">Műveletek</div>
+              <div class="flex justify-center items-center gap-1">
+                Műveletek
+              </div>
             </th>
           </tr>
         </thead>
@@ -81,18 +66,40 @@ defineProps<{
                       action.label === 'Szerkesztés'
                         ? 'bg-blue-500/80 hover:bg-blue-600 text-white focus:ring-blue-400'
                         : action.label === 'Törlés' &&
-                         'bg-red-500/80 hover:bg-red-600 text-white focus:ring-red-400'
+                          'bg-red-500/80 hover:bg-red-600 text-white focus:ring-red-400',
                     ]"
                     :title="action.label"
                   >
                     <template v-if="action.label === 'Szerkesztés'">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 3.487a2.25 2.25 0 1 1 3.182 3.182l-12.12 12.12a2 2 0 0 1-.878.513l-4.01 1.07a.5.5 0 0 1-.617-.617l1.07-4.01a2 2 0 0 1 .513-.878l12.12-12.12z" />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M16.862 3.487a2.25 2.25 0 1 1 3.182 3.182l-12.12 12.12a2 2 0 0 1-.878.513l-4.01 1.07a.5.5 0 0 1-.617-.617l1.07-4.01a2 2 0 0 1 .513-.878l12.12-12.12z"
+                        />
                       </svg>
                     </template>
                     <template v-else-if="action.label === 'Törlés'">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3m2 0v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V7h12z" />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6 7h12M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3m2 0v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V7h12z"
+                        />
                       </svg>
                     </template>
                     <template v-else>
@@ -123,3 +130,20 @@ defineProps<{
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+export interface TableColumn<T = any> {
+  key: keyof T | string;
+  label: string;
+  formatter?: (value: any, row: T) => string;
+}
+
+defineProps<{
+  rows: any[];
+  columns: TableColumn[];
+  actions?: {
+    label: string;
+    onClick: (row: any) => void;
+  }[];
+}>();
+</script>

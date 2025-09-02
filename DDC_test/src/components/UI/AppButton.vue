@@ -1,12 +1,3 @@
-<script setup lang="ts">
-withDefaults(defineProps<{
-  subtitle: string
-  type?: 'button' | 'submit'
-}>(), {
-  type: 'button'
-})
-</script>
-
 <template>
   <button
     :type="type"
@@ -15,3 +6,12 @@ withDefaults(defineProps<{
     {{ subtitle }}
   </button>
 </template>
+
+<script setup lang="ts">
+withDefaults(defineProps<{
+  subtitle: string
+  type?: 'button' | 'submit'
+}>(), {
+  type: 'button'
+})
+</script>

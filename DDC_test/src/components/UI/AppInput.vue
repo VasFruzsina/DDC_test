@@ -1,3 +1,12 @@
+<template>
+  <input
+    :type="type"
+    v-model="model"
+    @input="onInput"
+    class="pl-3 w-full rounded-xl border border-slate-200 bg-white py-2.5 text-slate-800 placeholder:text-slate-400 shadow-sm focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400"
+  />
+</template>
+
 <script setup lang="ts">
 import { parsePositiveNumber } from "../../utils/validators";
 
@@ -27,12 +36,3 @@ function onInput(e: Event) {
   }
 }
 </script>
-
-<template>
-  <input
-    :type="type"
-    v-model="model"
-    @input="onInput"
-    class="pl-3 w-full rounded-xl border border-slate-200 bg-white py-2.5 text-slate-800 placeholder:text-slate-400 shadow-sm focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400"
-  />
-</template>

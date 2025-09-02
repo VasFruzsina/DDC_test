@@ -1,3 +1,62 @@
+<template>
+  <div class="relative min-h-[70vh] p-10">
+    <div class="pointer-events-none absolute inset-0 -z-10">
+      <div
+        class="absolute -top-20 -left-20 h-72 w-72 rounded-full bg-indigo-500/20 blur-3xl"
+      ></div>
+      <div
+        class="absolute bottom-0 right-0 h-72 w-72 rounded-full bg-cyan-400/20 blur-3xl"
+      ></div>
+    </div>
+    <div
+      class="mx-auto max-w-5xl overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 shadow-xl backdrop-blur-md"
+    >
+      <header class="mb-6 flex items-center justify-between gap-4">
+        <div>
+          <h1
+            class="mb-2 text-xl font-semibold text-indigo-600 dark:text-slate-100"
+          >
+            Projektek
+          </h1>
+          <p class="text-sm text-slate-500">
+            Keresés, szerkesztés és törlés az alábbi táblázatban.
+          </p>
+        </div>
+        <span
+          class="rounded-full bg-indigo-500/10 px-3 py-1 text-xs font-medium text-indigo-600"
+        >
+          Összesen: {{ filteredRows.length }}
+        </span>
+      </header>
+
+      <div class="mb-4 flex items-center gap-2">
+        <AppInput
+          v-model.trim="q"
+          placeholder="Keresés: név, leírás, dátum, költségvetés…"
+          class="w-full"
+          @keyup.enter.prevent
+        />
+      </div>
+
+      <div v-if="filteredRows.length > 0">
+        <AppTable :rows="filteredRows" :columns="columns" :actions="actions" />
+      </div>
+      <div
+        v-else
+        class="flex flex-col items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 p-10 text-center"
+      >
+        <div class="text-3xl">🗂️</div>
+        <p class="text-sm text-slate-500">
+          Nincs találat a(z) “{{ q }}” kifejezésre.
+        </p>
+        <p class="text-xs text-slate-400">
+          Tipp: próbálj rövidebb kulcsszót, vagy töröld a keresést.
+        </p>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
 import type { ProjectForm } from "../../types/project";
 import { getItem, removeProject } from "../composables/useProjectStorage";
@@ -70,62 +129,3 @@ const actions = [
   },
 ];
 </script>
-
-<template>
-  <div class="relative min-h-[70vh] p-10">
-    <div class="pointer-events-none absolute inset-0 -z-10">
-      <div
-        class="absolute -top-20 -left-20 h-72 w-72 rounded-full bg-indigo-500/20 blur-3xl"
-      ></div>
-      <div
-        class="absolute bottom-0 right-0 h-72 w-72 rounded-full bg-cyan-400/20 blur-3xl"
-      ></div>
-    </div>
-    <div
-      class="mx-auto max-w-5xl overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 shadow-xl backdrop-blur-md"
-    >
-      <header class="mb-6 flex items-center justify-between gap-4">
-        <div>
-          <h1
-            class="mb-2 text-xl font-semibold text-indigo-600 dark:text-slate-100"
-          >
-            Projektek
-          </h1>
-          <p class="text-sm text-slate-500">
-            Keresés, szerkesztés és törlés az alábbi táblázatban.
-          </p>
-        </div>
-        <span
-          class="rounded-full bg-indigo-500/10 px-3 py-1 text-xs font-medium text-indigo-600"
-        >
-          Összesen: {{ filteredRows.length }}
-        </span>
-      </header>
-
-      <div class="mb-4 flex items-center gap-2">
-        <AppInput
-          v-model.trim="q"
-          placeholder="Keresés: név, leírás, dátum, költségvetés…"
-          class="w-full"
-          @keyup.enter.prevent
-        />
-      </div>
-
-      <div v-if="filteredRows.length > 0">
-        <AppTable :rows="filteredRows" :columns="columns" :actions="actions" />
-      </div>
-      <div
-        v-else
-        class="flex flex-col items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 p-10 text-center"
-      >
-        <div class="text-3xl">🗂️</div>
-        <p class="text-sm text-slate-500">
-          Nincs találat a(z) “{{ q }}” kifejezésre.
-        </p>
-        <p class="text-xs text-slate-400">
-          Tipp: próbálj rövidebb kulcsszót, vagy töröld a keresést.
-        </p>
-      </div>
-    </div>
-  </div>
-</template>
