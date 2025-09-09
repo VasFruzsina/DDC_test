@@ -1,5 +1,5 @@
 export interface ProjectForm {
-  id: number;
+  id: string;
   name: string;
   description: string;
   startDate: string;

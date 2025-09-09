@@ -125,37 +125,32 @@ const startDate = ref<string | undefined>(undefined);
 const budget = ref<number | null>(null);
 
 const route = useRoute();
-const id = Number(route.params.id);
+const id = String(route.params.id ?? "");
 const all = getItem<ProjectForm[]>("projectForms") ?? [];
 const project = all.find((p) => p.id === id);
-const isEditing = computed(() => Number.isFinite(id) && !!project);
+const isEditing = computed(() => !!id && !!project);
 
-function nextID(key = "projectForm:lastId"): number {
-  const raw = localStorage.getItem(key);
-  const last = raw ? parseInt(raw, 10) : 0;
-  const next = last + 1;
-  localStorage.setItem(key, String(next));
-  return next;
+function generateID(): string {
+  return crypto.randomUUID();
 }
 
 function onSubmit() {
-  const list = getItem<ProjectForm[]>("projectForms") ?? [];
-  if (isEditing.value) {
-    const idx = list.findIndex((p) => p.id === id);
-    if (idx !== -1) {
-      list[idx] = {
-        id,
-        name: name.value ?? "",
-        description: description.value ?? "",
-        startDate: startDate.value ?? "",
-        budget: budget.value ?? null,
-      };
-      setItem("projectForms", list);
-      showToast("Projekt sikeresen módosítva!", "info");
-    }
+  const list = all;
+
+  if (isEditing.value && project) {
+    const idx = list.findIndex(p => p.id === id);
+    list[idx] = {
+      ...project,
+      name: name.value ?? "",
+      description: description.value ?? "",
+      startDate: startDate.value ?? "",
+      budget: budget.value ?? null,
+    };
+    setItem("projectForms", list);
+    showToast("Projekt sikeresen módosítva!", "info");
   } else {
     const data: ProjectForm = {
-      id: nextID(),
+      id: generateID(),
       name: name.value ?? "",
       description: description.value ?? "",
       startDate: startDate.value ?? "",
