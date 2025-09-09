@@ -31,7 +31,7 @@
 
       <div class="mb-4 flex items-center gap-2">
         <AppInput
-          v-model.trim="q"
+          v-model="q"
           placeholder="Keresés: név, leírás, dátum, költségvetés…"
           class="w-full"
           @keyup.enter.prevent
@@ -69,13 +69,7 @@ import { CurrencyFormat, DateTimeFormat } from "../../utils/formatters";
 const router = useRouter();
 const q = ref("");
 
-function readAll(): ProjectForm[] {
-  const one = getItem<ProjectForm>("projectForm");
-  const many = getItem<ProjectForm[]>("projectForms");
-  return (many ?? (one ? [one] : [])) as ProjectForm[];
-}
-
-const rows = ref<ProjectForm[]>(readAll());
+const rows = ref<ProjectForm[]>(getItem<ProjectForm[]>("projectForms") ?? []);
 
 const searchableKeys: (keyof ProjectForm)[] = [
   "name",
@@ -112,7 +106,7 @@ const columns = [
 ];
 
 function refresh() {
-  rows.value = readAll();
+  rows.value = getItem<ProjectForm[]>("projectForms") ?? [];
 }
 
 const actions = [

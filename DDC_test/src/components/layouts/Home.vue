@@ -34,9 +34,9 @@
         class="mt-4 grid grid-cols-1 gap-2 md:grid-cols-2"
       >
         <li
-          v-for="(item, i) in techStack"
+          v-for="item in techStack"
           :key="item"
-          :class="['flex items-start gap-2', i === techStack.length - 1 ? 'md:col-span-2' : '']"
+          class="flex items-start gap-2"
         >
           <span class="mt-2 h-1.5 w-1.5 rounded-full bg-indigo-500"></span>
           <span class="text-slate-400">{{ item }}</span>
