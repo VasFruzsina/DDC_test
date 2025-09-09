@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import { parsePositiveNumber } from "../../utils/validators";
 
-const model = defineModel<number | string | null | undefined>({ default: "" });
+const model = defineModel<string | number | null>({ default: "" });
 
 const props = withDefaults(
   defineProps<{

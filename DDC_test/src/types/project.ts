@@ -11,3 +11,9 @@ export interface MenuItem {
   href: string;
   currentItem?: boolean;
 }
+
+export interface TableColumn {
+  key: string;
+  label: string;
+  formatter?: (value: any, row: any) => string;
+}

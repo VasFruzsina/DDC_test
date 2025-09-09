@@ -132,11 +132,7 @@
 </template>
 
 <script setup lang="ts">
-export interface TableColumn<T = any> {
-  key: keyof T | string;
-  label: string;
-  formatter?: (value: any, row: T) => string;
-}
+import type { TableColumn } from "../../types/project";
 
 defineProps<{
   rows: any[];

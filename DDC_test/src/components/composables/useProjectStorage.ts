@@ -9,7 +9,7 @@ export function getItem<T>(key: string): T | null {
   return item ? (JSON.parse(item) as T) : null;
 }
 
-export function removeProject(id: number): void {
+export function removeProject(id: string): void {
   const projects = getItem<ProjectForm[]>("projectForms") ?? [];
   const updated = projects.filter((p) => p.id !== id);
   setItem("projectForms", updated);

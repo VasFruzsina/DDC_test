@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-interface MenuItem {
+export interface MenuItem {
   name: string;
   href: string;
 }
