@@ -64,7 +64,8 @@ import AppTable from "../UI/AppTable.vue";
 import AppInput from "../UI/AppInput.vue";
 import { useRouter } from "vue-router";
 import { computed, ref } from "vue";
-import { CurrencyFormat, DateTimeFormat } from "../../utils/formatters";
+import { formatCurrency, formatDate } from "../../utils/formatters";
+
 
 const router = useRouter();
 const q = ref("");
@@ -96,12 +97,12 @@ const columns = [
   {
     key: "startDate",
     label: "Kezdési dátum",
-    formatter: (v: any) => DateTimeFormat(v),
+    formatter: (v: any) => formatDate(v),
   },
   {
     key: "budget",
     label: "Költségvetés",
-    formatter: (v: any) => CurrencyFormat(Number(v)),
+    formatter: (v: any) => formatCurrency(Number(v)),
   },
 ];
 

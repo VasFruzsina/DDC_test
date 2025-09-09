@@ -33,17 +33,12 @@
       <form class="grid gap-5" @submit.prevent="onSubmit">
         <div class="relative">
           <label
-          for="name"
-          class="mb-2 block text-sm font-medium text-slate-600"
-          >Projekt neve</label
+            for="name"
+            class="mb-2 block text-sm font-medium text-slate-600"
+            >Projekt neve</label
           >
-          
-          <AppInput
-            id="name"
-            v-model="name"
-            type="text"
-            required
-          />
+
+          <AppInput id="name" v-model="name" type="text" required />
         </div>
 
         <div>
@@ -72,10 +67,7 @@
               class="mb-2 block text-sm font-medium text-slate-600"
               >Kezdési dátum</label
             >
-            <AppInput
-              id="start"
-              v-model="startDate"
-              type="date"></AppInput>
+            <AppInput id="start" v-model="startDate" type="date"></AppInput>
           </div>
           <div class="relative">
             <label
@@ -98,10 +90,7 @@
           </div>
         </div>
         <div class="mt-2 flex items-center justify-center gap-3">
-          <AppButton
-            type="submit"
-            subtitle="Mentés"
-          />
+          <AppButton type="submit" subtitle="Mentés" />
         </div>
       </form>
     </div>
@@ -138,23 +127,27 @@ function onSubmit() {
   const list = all;
 
   if (isEditing.value && project) {
-    const idx = list.findIndex(p => p.id === id);
+    const idx = list.findIndex((p) => p.id === id);
     list[idx] = {
       ...project,
       name: name.value ?? "",
       description: description.value ?? "",
       startDate: startDate.value ?? "",
       budget: budget.value ?? null,
+      updatedAt: new Date().toISOString(),
     };
     setItem("projectForms", list);
     showToast("Projekt sikeresen módosítva!", "info");
   } else {
+    const now = new Date().toISOString();
     const data: ProjectForm = {
       id: generateID(),
       name: name.value ?? "",
       description: description.value ?? "",
       startDate: startDate.value ?? "",
       budget: budget.value ?? null,
+      createdAt: now,
+      updatedAt: now,
     };
     list.push(data);
     setItem("projectForms", list);

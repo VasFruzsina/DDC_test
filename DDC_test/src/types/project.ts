@@ -4,12 +4,12 @@ export interface ProjectForm {
   description: string;
   startDate: string;
   budget: number | null;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface MenuItem {
   name: string;
-  href: string;
-  currentItem?: boolean;
 }
 
 export interface TableColumn {

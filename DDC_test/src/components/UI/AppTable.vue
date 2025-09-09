@@ -32,8 +32,8 @@
 
         <tbody v-if="rows.length">
           <tr
-            v-for="(row, i) in rows"
-            :key="row.id ?? i"
+            v-for="row in rows"
+            :key="row.id"
             class="bg-white/40 dark:bg-slate-900/20 transition-colors hover:bg-indigo-50/80 dark:hover:bg-slate-800/50"
           >
             <td

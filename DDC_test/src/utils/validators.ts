@@ -1,11 +1,9 @@
-export const parsePositiveNumber = (raw: string): number | null => {
-  const s = raw.replace(',', '.').trim();
-  if (s === '') return null;
-  const n = Number(s);
-  return Number.isFinite(n) && n > 0 ? n : null;
-};
+export function parsePositiveNumber(raw: string): number | null {
+  const n = Number(raw.replace(",", ".").trim());
+  return n > 0 && Number.isFinite(n) ? n : null;
+}
 
-export const isValidBudget = (v: unknown): boolean => {
-  const n = typeof v === 'number' ? v : Number(v as any);
+export function isValidBudget(v: unknown): boolean {
+  const n = typeof v === "number" ? v : Number(v);
   return Number.isFinite(n) && n >= 0;
-};
+}

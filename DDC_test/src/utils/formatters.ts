@@ -1,11 +1,19 @@
-export const DateTimeFormat = (value: string | Date): string => {
-  if (!value) return '';
-  const d = value instanceof Date ? value : new Date(value);
-  if (Number.isNaN(d.getTime())) return '';
-  return d.toLocaleDateString('hu-HU');
-};
+function safeFormat<T>(
+  value: T | null | undefined,
+  fn: (v: T) => string
+): string {
+  if (value == null) return "";
+  return fn(value);
+}
 
-export const CurrencyFormat = (value: number | null | undefined): string => {
-  if (value == null || !Number.isFinite(Number(value))) return '';
-  return value.toLocaleString('hu-HU', { style: 'currency', currency: 'HUF', maximumFractionDigits: 0 });
-};
+export const formatDate = (value: string | Date) =>
+  safeFormat(value, (v) => new Date(v).toLocaleDateString("hu-HU"));
+
+export const formatCurrency = (value: number) =>
+  safeFormat(value, (v) =>
+    v.toLocaleString("hu-HU", {
+      style: "currency",
+      currency: "HUF",
+      maximumFractionDigits: 0,
+    })
+  );
