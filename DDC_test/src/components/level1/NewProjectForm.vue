@@ -98,7 +98,8 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+const router = useRouter();
 import type { ProjectForm } from "../../types/project";
 import { getItem, setItem } from "../composables/useProjectStorage";
 import AppButton from "../UI/AppButton.vue";
@@ -138,6 +139,7 @@ function onSubmit() {
     };
     setItem("projectForms", list);
     showToast("Projekt sikeresen módosítva!", "info");
+    router.push("/projects");
   } else {
     const now = new Date().toISOString();
     const data: ProjectForm = {
@@ -152,6 +154,7 @@ function onSubmit() {
     list.push(data);
     setItem("projectForms", list);
     showToast("Új projekt sikeresen létrehozva!", "success");
+    router.push("/projects");
   }
 }
 
